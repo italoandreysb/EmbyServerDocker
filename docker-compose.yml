@@ -1,17 +1,23 @@
-version: '3'
+version: '3.9'
 
 services:
   emby:
     image: emby/embyserver:latest
     container_name: emby_server
     environment:
-      - UID=1000           # ID do usuário
-      - GID=1000           # ID do grupo
-      - GIDLIST=1000       # ID do grupo adicional, se necessário
+      UID: 1000
+      GID: 1000
+      GIDLIST: 1000
     volumes:
-      - /italus_files/filmes:/mnt/filmes       # Mapeia a pasta local dos filmes
-      - ./emby_data/config:/config           # Armazena dados de configuração do Emby
+      - filmes:/mnt/filmes
+      - livros:/mnt/livros
+      - config:/config
     ports:
-      - 8096:8096     # Porta de acesso ao Emby Server
-      - 8920:8920     # Porta para acesso seguro (HTTPS)
+      - "8096:8096"
+      - "8920:8920"
     restart: unless-stopped
+
+volumes:
+  filmes:
+  config:
+  livros:
